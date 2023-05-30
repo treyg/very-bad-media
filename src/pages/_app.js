@@ -1,5 +1,7 @@
-import '@/styles/globals.css'
+import ChakraApp from '../chakra'
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+function App({ Component, pageProps }) {
+  return <ChakraApp Component={Component} pageProps={pageProps} />
 }
+
+export default App

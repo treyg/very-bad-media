@@ -23,7 +23,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      console.log(episodes)
+
       <div>
         <div className="card w-96 bg-base-100 shadow-xl glass">
           <figure>
@@ -37,7 +37,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {episodes.map((episode, index) => (
+        {/* {episodes.map((episode, index) => (
           <div key={index}>
             <h2>{episode.episode}</h2>
             <p>{episode.link}</p>
@@ -56,7 +56,7 @@ export default function Home() {
               ))}
             </ul>
           </div>
-        ))}
+        ))} */}
       </div>
     </>
   )
