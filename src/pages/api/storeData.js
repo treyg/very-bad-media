@@ -1,4 +1,4 @@
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 
 async function storeDataInKV(key, data) {
   try {
@@ -14,6 +14,8 @@ async function storeDataInKV(key, data) {
     console.dir(result, { depth: null })
   } catch (error) {
     console.error(`Error storing data in KV: ${error}`)
+    throw new Error('Error storing data in KV')
   }
 }
-module.exports = storeDataInKV
+
+export default storeDataInKV

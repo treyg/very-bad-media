@@ -1,7 +1,4 @@
-require('dotenv').config({ path: '../../.env.development.local' })
-
-const Configuration = require('openai').Configuration
-const OpenAIApi = require('openai').OpenAIApi
+import { Configuration, OpenAIApi } from 'openai'
 
 const configuration = new Configuration({
   apiKey: process.env.OPEN_AI_API_KEY
@@ -54,7 +51,7 @@ async function analyzeText(text) {
   })
 
   console.log('Text analyzed successfully!')
-  return result.data['choices'][0]['message']['content']
+  return result.data.choices[0].message.content
 }
 
-module.exports = analyzeText
+export default analyzeText

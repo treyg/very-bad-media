@@ -1,4 +1,4 @@
-const RSSParser = require('rss-parser')
+import RSSParser from 'rss-parser'
 
 async function fetchRss(rssFeedUrl) {
   console.log('Fetching RSS feed...')
@@ -7,14 +7,11 @@ async function fetchRss(rssFeedUrl) {
     const feed = await parser.parseURL(rssFeedUrl)
 
     const episodes = feed.items.map(item => {
-      // Find the start of the "Links" section.
       const linksStart = item.contentSnippet.indexOf('Links:\n')
       let contentLinks = []
 
       if (linksStart !== -1) {
-        // Extract everything after "Links:\n".
         const linksText = item.contentSnippet.slice(linksStart + 'Links:\n'.length)
-
         contentLinks = linksText.split('\n').filter(link => link.trim() !== '')
       }
 
@@ -34,7 +31,8 @@ async function fetchRss(rssFeedUrl) {
     return episodes
   } catch (error) {
     console.log(error)
+    throw new Error('Error fetching RSS feed')
   }
 }
 
-module.exports = fetchRss
+export default fetchRss

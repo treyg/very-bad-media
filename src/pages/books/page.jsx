@@ -1,12 +1,14 @@
-import MediaTable from '../components/MediaTable'
+import MediaTable from '@/components/MediaTable'
 
-const Books = () => {
+import { Box, Heading } from '@chakra-ui/react'
+
+export default function Books() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold">Books</h1>
-      <MediaTable mediaType="books" />
-    </div>
+    <Box p={4}>
+      <Heading as="h1" size="xl">
+        Welcome to Chakra UI!
+      </Heading>
+      <MediaTable />
+    </Box>
   )
 }
-
-export default Books
