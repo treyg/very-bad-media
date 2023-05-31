@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react'
 
 function formatDate(dateString) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' }
+  const options = { year: 'numeric', month: 'short', day: 'numeric' }
   const date = new Date(dateString)
   return date.toLocaleDateString(undefined, options)
 }
 
-const MediaTable = () => {
+const MediaTable = ({ mediaType }) => {
   const router = useRouter()
-  const { mediaType } = router.query // get mediaType from the router query
   const [episodes, setEpisodes] = useState([])
 
   useEffect(() => {
@@ -26,8 +26,6 @@ const MediaTable = () => {
     fetchMediaData()
   }, [])
 
-  console.log(episodes)
-
   const data = episodes.map(episode => ({
     episodeTitle: episode.episode,
     episodeLink: episode.link,
@@ -37,32 +35,32 @@ const MediaTable = () => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="table w-full">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table variant="simple">
+        <Thead>
+          <Tr>
+            <Th>Title</Th>
+            <Th>Author</Th>
+            <Th>Date</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
           {data.map((item, index) =>
             item.media.map((mediaItem, mIndex) => (
-              <tr key={`${index}-${mIndex}`} className={index % 2 === 0 ? 'active' : ''}>
-                <td>
+              <Tr key={`${index}-${mIndex}`} className={index % 2 === 0 ? 'active' : ''}>
+                <Td>
                   {mediaItem.title}
                   <br />
                   <a href={item.episodeLink} className="text-sm">
                     {item.episodeTitle}
                   </a>
-                </td>
-                <td>{mediaItem.author || mediaItem.director}</td>
-                <td>{item.episodeDate}</td>
-              </tr>
+                </Td>
+                <Td>{mediaItem.author || mediaItem.director}</Td>
+                <Td>{item.episodeDate}</Td>
+              </Tr>
             ))
           )}
-        </tbody>
-      </table>
+        </Tbody>
+      </Table>
     </div>
   )
 }
