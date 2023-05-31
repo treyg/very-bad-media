@@ -1,7 +1,14 @@
-import ChakraApp from '../chakra'
+import { ChakraProvider } from '@chakra-ui/react'
+import theme from '../theme/theme'
+import WithSubnavigation from '../components/WithSubnavigation'
 
 function App({ Component, pageProps }) {
-  return <ChakraApp Component={Component} pageProps={pageProps} />
+  return (
+    <ChakraProvider theme={theme}>
+      <WithSubnavigation />
+      <Component {...pageProps} />
+    </ChakraProvider>
+  )
 }
 
 export default App

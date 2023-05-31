@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 import { useEffect, useState } from 'react'
+import CallToActionWithAnnotation from '@/components/CallToActionAnnotation'
+import DottedBox from '@/components/DottedBox'
 
 export default function Home() {
   const [episodes, setEpisodes] = useState([])
@@ -25,18 +27,8 @@ export default function Home() {
       </Head>
 
       <div>
-        <div className="card w-96 bg-base-100 shadow-xl glass">
-          <figure>
-            <img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
+        <DottedBox />
+        <CallToActionWithAnnotation />
         {/* {episodes.map((episode, index) => (
           <div key={index}>
             <h2>{episode.episode}</h2>
