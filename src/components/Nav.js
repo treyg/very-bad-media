@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { NAV_ITEMS } from './NavItems'
 import {
   Box,
