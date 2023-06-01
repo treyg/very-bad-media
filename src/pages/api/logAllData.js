@@ -1,8 +1,12 @@
 import fetch from 'node-fetch'
 
-export async function logAllData() {
+import dotenv from 'dotenv'
+dotenv.config({
+  path: '../../../.env.development.local'
+})
+async function logAllData() {
   const { KV_REST_API_URL, KV_REST_API_TOKEN } = process.env
-
+  console.log(KV_REST_API_URL, KV_REST_API_TOKEN)
   try {
     // Fetch all keys from the KV store
     const keysResponse = await fetch(`${KV_REST_API_URL}/keys/*`, {
@@ -35,3 +39,5 @@ export async function logAllData() {
     console.error(`Error fetching data from KV: ${error}`)
   }
 }
+
+logAllData()
