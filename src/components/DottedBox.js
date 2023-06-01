@@ -1,19 +1,20 @@
 import { Box, useColorModeValue } from '@chakra-ui/react'
 
-function DottedBox() {
+function DottedBox({ ...props }) {
   return (
     <Box
-      position="absolute"
-      left="-45px"
-      top="-30px"
-      height="full"
-      maxW="700px"
-      zIndex={-1}
+      {...props}
+      height="auto"
+      bottom={0}
+      right="0"
+      width="30vw"
+      zIndex={1}
+      maxW="900px"
     >
       <svg
         color={useColorModeValue('rgba(55,65,81, 0.1)', 'rgba(55,65,81, 0.7)')}
-        width="350"
-        height="420"
+        width="100%"
+        height="100%"
         fill="none"
       >
         <defs>
@@ -29,8 +30,8 @@ function DottedBox() {
           </pattern>
         </defs>
         <rect
-          width="404"
-          height="404"
+          width="100%"
+          height="100%"
           fill="url(#5d0dd344-b041-4d26-bec4-8d33ea57ec9b)"
         ></rect>
       </svg>

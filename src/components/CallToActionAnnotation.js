@@ -17,6 +17,8 @@ export default function CallToActionWithAnnotation() {
     'dark.backgroundColor'
   )
   const headingColor = useColorModeValue('light.heading', 'dark.heading')
+  const warningColor = useColorModeValue('light.warning', 'dark.warning')
+  const accentColor = useColorModeValue('light.secondary', 'dark.secondary')
   const textColor = useColorModeValue('light.text', 'dark.text')
   const buttonColor = useColorModeValue('light.primary', 'light.primary')
   const buttonHoverColor = useColorModeValue('green.500', 'green.500')
@@ -38,47 +40,69 @@ export default function CallToActionWithAnnotation() {
           py={{ base: 20, md: 36 }}
           bg={backgroundColor} // Set the background color
         >
-          <Heading
-            fontWeight={600}
-            fontSize={{ base: '4xl', sm: '6xl', md: '8xl' }}
-            lineHeight={'110%'}
-            color={headingColor} // Set the text color
-          >
-            <Box display="flex" alignItems="center">
-              <Text
-                fontWeight={600}
-                fontSize={{ base: '4xl', sm: '6xl', md: '8xl' }}
-                lineHeight={'110%'}
-                color={headingColor}
-              >
-                Very Bad{' '}
-                <Text as={'span'} color={'green.400'}>
-                  Wizards
-                </Text>
-              </Text>
-              <Box
-                position="absolute"
-                right="25%"
-                display="flex"
-                alignItems="center"
-                top="39%"
-              >
-                <Icon
-                  as={Arrow}
-                  color={headingColor} // Set the arrow color
-                  w={71}
-                />
+          <Heading>
+            <Box display="flex" alignItems="center" justifyContent="center">
+              <Box position="relative">
                 <Text
-                  fontSize="xl"
-                  fontFamily="Caveat"
-                  transform="rotate(10deg)"
-                  color={headingColor} // Set the text color
+                  fontWeight={600}
+                  fontSize={{ base: '5xl', sm: '8xl', md: '10xl' }}
+                  lineHeight={'110%'}
+                  color={headingColor}
+                  mx={'auto'}
                 >
-                  Media
+                  Very Bad <br />
+                  <Text
+                    as={'span'}
+                    color={'green.400'}
+                    position="relative"
+                    _after={{
+                      content: '""',
+                      position: 'absolute',
+                      top: '55%',
+                      left: '0',
+                      right: '0',
+                      bottom: '0',
+                      height: '3px',
+                      backgroundColor: 'red', // Change this to the color you want for the line
+                      transform: 'rotate(10deg)',
+                      transformOrigin: 'center'
+                    }}
+                    _before={{
+                      content: '""',
+                      position: 'absolute',
+                      top: '55%',
+                      left: '0',
+                      right: '0',
+                      bottom: '0',
+                      height: '3px',
+                      backgroundColor: 'red', // Change this to the color you want for the line
+                      transform: 'rotate(-10deg)',
+                      transformOrigin: 'center'
+                    }}
+                  >
+                    Wizards
+                  </Text>
                 </Text>
+                <Box mt="20px" display="flex" mx="auto" justifyContent="center">
+                  <Icon
+                    as={Arrow}
+                    color={headingColor} // Set the arrow color
+                    w={71}
+                    transform="rotate(51.2deg)"
+                  />
+                  <Text
+                    fontSize="5xl"
+                    fontFamily="Caveat"
+                    transform="rotate(8deg)"
+                    color={accentColor} // Set the text color
+                  >
+                    Media
+                  </Text>
+                </Box>
               </Box>
             </Box>
           </Heading>
+
           <Text color={textColor}>
             Media lists for movies, books, short stories and articles discussed on the
             Very Bad Wizards podcast.
@@ -98,9 +122,9 @@ export default function CallToActionWithAnnotation() {
                 bg: buttonHoverColor // Set the button hover background color
               }}
             >
-              Get Started
+              <a href="#master">View Master List</a>
             </Button>
-            <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
+            <Button variant={'link'} colorScheme={'secondary'} size={'sm'}>
               Learn more
             </Button>
           </Stack>
