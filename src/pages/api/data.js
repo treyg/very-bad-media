@@ -6,6 +6,7 @@ export default async function handler(req, res) {
     try {
       // Fetch all keys from the KV store
       const keys = await kv.keys('episode:*')
+      console.log(keys)
 
       // Fetch the data for each key
       const episodesData = []
