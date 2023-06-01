@@ -1,12 +1,14 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, Container } from '@chakra-ui/react'
 import theme from '../theme/theme'
-import WithSubnavigation from '../components/WithSubnavigation'
+import WithSubnavigation from '../components/WithSubNavigation'
 
 function App({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <WithSubnavigation />
-      <Component {...pageProps} />
+      <Container maxW="7xl">
+        <Component {...pageProps} />
+      </Container>
     </ChakraProvider>
   )
 }
