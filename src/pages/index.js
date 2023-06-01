@@ -34,16 +34,25 @@ export default function Home() {
 
       <Box position="relative">
         <DottedBox position="absolute" />
+        {/* <Image src="/logo.svg" alt="Very Bad Media" width="300" height="300" /> */}
         <BackgroundBlobs position="absolute" right="-200px" />
         <CallToActionWithAnnotation />
       </Box>
-      <Box id="master">
+      <Box id="master" mt={{ base: '80px' }}>
         <Heading as="h2" size="lg" mb="10px">
           Master List
         </Heading>
+
         <MediaTable
           episodes={episodes}
-          mediaTypes={['books', 'movies', 'shortStories']}
+          mediaTypes={[
+            'books',
+            'movies',
+            'shortStories',
+            'tvShows',
+            'articles',
+            'essays'
+          ]}
         />
       </Box>
 
