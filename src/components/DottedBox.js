@@ -7,9 +7,9 @@ function DottedBox({ ...props }) {
       height="auto"
       bottom={0}
       right="0"
-      width="30vw"
-      zIndex={1}
-      maxW="900px"
+      width={{ base: '30vw', md: '20vw' }}
+      zIndex={0}
+      maxW="500px"
     >
       <svg
         color={useColorModeValue('rgba(55,65,81, 0.1)', 'rgba(55,65,81, 0.7)')}

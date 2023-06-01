@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import Image from 'next/image'
-import NAV_ITEMS from '@/data/NavItems'
+import { NAV_ITEMS } from './NavItems'
 import {
   Box,
   Flex,
@@ -31,21 +30,10 @@ export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode() // Access the color mode and toggle function
 
-  const backgroundColor = useColorModeValue(
-    'light.backgroundColor',
-    'dark.backgroundColor'
-  )
-  const headingColor = useColorModeValue('light.heading', 'dark.heading')
-  const warningColor = useColorModeValue('light.warning', 'dark.warning')
-  const accentColor = useColorModeValue('light.secondary', 'dark.secondary')
-  const textColor = useColorModeValue('light.text', 'dark.text')
-  const buttonColor = useColorModeValue('light.primary', 'dark.primary')
-  const buttonHoverColor = useColorModeValue('green.500', 'green.500')
-
   return (
     <Box>
       <Flex
-        bg={backgroundColor}
+        bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
         minH={'60px'}
         py={{ base: 2 }}
@@ -67,15 +55,13 @@ export default function WithSubnavigation() {
             aria-label={'Toggle Navigation'}
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }} align="center">
+        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Text
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}
           >
-            <Link href="/">
-              <Image src="/logo.svg" alt="Logo" width={50} height={50} />
-            </Link>
+            Logo
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
