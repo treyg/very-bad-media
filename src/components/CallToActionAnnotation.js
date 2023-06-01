@@ -8,8 +8,11 @@ import {
   Stack,
   Icon,
   useColorModeValue,
-  createIcon
+  createIcon,
+  border
 } from '@chakra-ui/react'
+
+import Link from 'next/link'
 
 export default function CallToActionWithAnnotation() {
   const backgroundColor = useColorModeValue(
@@ -20,7 +23,7 @@ export default function CallToActionWithAnnotation() {
   const warningColor = useColorModeValue('light.warning', 'dark.warning')
   const accentColor = useColorModeValue('light.secondary', 'dark.secondary')
   const textColor = useColorModeValue('light.text', 'dark.text')
-  const buttonColor = useColorModeValue('light.primary', 'light.primary')
+  const buttonColor = useColorModeValue('light.primary', 'dark.primary')
   const buttonHoverColor = useColorModeValue('green.500', 'green.500')
 
   return (
@@ -53,7 +56,7 @@ export default function CallToActionWithAnnotation() {
                   Very Bad <br />
                   <Text
                     as={'span'}
-                    color={'green.400'}
+                    color={buttonColor}
                     position="relative"
                     _after={{
                       content: '""',
@@ -63,7 +66,7 @@ export default function CallToActionWithAnnotation() {
                       right: '0',
                       bottom: '0',
                       height: '3px',
-                      backgroundColor: 'red', // Change this to the color you want for the line
+                      backgroundColor: 'red',
                       transform: 'rotate(10deg)',
                       transformOrigin: 'center'
                     }}
@@ -75,7 +78,7 @@ export default function CallToActionWithAnnotation() {
                       right: '0',
                       bottom: '0',
                       height: '3px',
-                      backgroundColor: 'red', // Change this to the color you want for the line
+                      backgroundColor: 'red',
                       transform: 'rotate(-10deg)',
                       transformOrigin: 'center'
                     }}
@@ -102,13 +105,16 @@ export default function CallToActionWithAnnotation() {
               </Box>
             </Box>
           </Heading>
-
-          <Text color={textColor}>
-            Media lists for movies, books, short stories and articles discussed on the
-            Very Bad Wizards podcast.
-          </Text>
+          <Container marginInline="auto !important" mt="28px !important">
+            <Text
+              color={textColor} // Set the text color
+            >
+              Media lists for books, movies, and short stories discussed on the Very Bad
+              Wizards podcast.
+            </Text>
+          </Container>
           <Stack
-            direction={'column'}
+            direction={'row'}
             spacing={3}
             align={'center'}
             alignSelf={'center'}
@@ -116,18 +122,38 @@ export default function CallToActionWithAnnotation() {
           >
             <Button
               colorScheme={buttonColor} // Set the button color scheme
-              bg={buttonColor} // Set the button background color
+              bg={buttonColor}
               px={6}
               _hover={{
-                bg: buttonHoverColor // Set the button hover background color
+                bg: buttonHoverColor
               }}
             >
-              <a href="#master">View Master List</a>
+              <Link href="/movies">Movies</Link>
             </Button>
-            <Button variant={'link'} colorScheme={'secondary'} size={'sm'}>
-              Learn more
+            <Button
+              colorScheme={buttonColor} // Set the button color scheme
+              bg={buttonColor}
+              px={6}
+              _hover={{
+                bg: buttonHoverColor
+              }}
+            >
+              <Link href="/books">Books</Link>
+            </Button>
+            <Button
+              colorScheme={buttonColor} // Set the button color scheme
+              bg={buttonColor}
+              px={6}
+              _hover={{
+                bg: buttonHoverColor
+              }}
+            >
+              <Link href="/articles">Articles</Link>
             </Button>
           </Stack>
+          <Button variant="link" color={accentColor}>
+            <Link href="/about-site">Learn More</Link>
+          </Button>
         </Stack>
       </Container>
     </>

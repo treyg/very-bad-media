@@ -1,5 +1,6 @@
-import { useRouter } from 'next/router'
-import { Table, Thead, Tbody, Tr, Th, Td, Text } from '@chakra-ui/react'
+import { useState } from 'react'
+
+import { Table, Thead, Tbody, Tr, Th, Td, Text, Box } from '@chakra-ui/react'
 
 function formatDate(dateString) {
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
@@ -21,6 +22,9 @@ function fixType(type) {
 }
 
 const MediaTable = ({ episodes, mediaTypes }) => {
+  const [sortField, setSortField] = useState(null)
+  const [sortDirection, setSortDirection] = useState(null)
+
   const data = episodes
     ? episodes
         .map(episode =>
@@ -35,42 +39,72 @@ const MediaTable = ({ episodes, mediaTypes }) => {
         .reduce((acc, val) => acc.concat(val), [])
     : []
 
+  // Sort data
+  if (sortField !== null) {
+    data.sort((a, b) => {
+      if (a[sortField] < b[sortField]) {
+        return sortDirection === 'asc' ? -1 : 1
+      }
+      if (a[sortField] > b[sortField]) {
+        return sortDirection === 'asc' ? 1 : -1
+      }
+      return 0
+    })
+  }
+
+  const handleSort = field => {
+    setSortField(field)
+    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+  }
+
   return (
-    <Table variant="simple">
-      <Thead>
-        <Tr>
-          <Th>Title</Th>
-          <Th>Type</Th>
-          <Th>Author</Th>
-          <Th>Date</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {data.map((item, index) =>
-          item.media.map((mediaItem, mIndex) => (
-            <Tr key={`${index}-${mIndex}`} className={index % 2 === 0 ? 'active' : ''}>
-              <Td>
-                <Text fontSize="md" fontWeight="bold">
-                  {typeof mediaItem === 'string' ? mediaItem : mediaItem.title}
-                </Text>
-                <Text fontSize="sm" color="gray.500">
-                  <a href={item.episodeLink}>{item.episodeTitle}</a>
-                </Text>
-              </Td>
-              <Td>
-                <Text fontSize="md">{fixType(item.mediaType)}</Text>
-              </Td>
-              <Td>
-                <Text fontSize="sm">{mediaItem.author || mediaItem.director || ''}</Text>
-              </Td>
-              <Td>
-                <Text fontSize="sm">{item.episodeDate}</Text>
-              </Td>
-            </Tr>
-          ))
-        )}
-      </Tbody>
-    </Table>
+    <Box overflowX="auto">
+      <Table variant="simple" minWidth="100%">
+        <Thead>
+          <Tr>
+            <Th cursor={'pointer'} onClick={() => handleSort('episodeTitle')}>
+              Title
+            </Th>
+            <Th cursor={'pointer'} onClick={() => handleSort('mediaType')}>
+              Type
+            </Th>
+            <Th cursor={'pointer'} onClick={() => handleSort('author')}>
+              Author
+            </Th>
+            <Th cursor={'pointer'} onClick={() => handleSort('episodeDate')}>
+              Date
+            </Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {data.map((item, index) =>
+            item.media.map((mediaItem, mIndex) => (
+              <Tr key={`${index}-${mIndex}`} className={index % 2 === 0 ? 'active' : ''}>
+                <Td>
+                  <Text fontSize="md" fontWeight="bold">
+                    <a href={mediaItem.link ? mediaItem.link : '#'}>{mediaItem.title}</a>
+                  </Text>
+                  <Text fontSize="sm" color="gray.500">
+                    <a href={item.episodeLink}>{item.episodeTitle}</a>
+                  </Text>
+                </Td>
+                <Td>
+                  <Text fontSize="md">{fixType(item.mediaType)}</Text>
+                </Td>
+                <Td>
+                  <Text fontSize="sm">
+                    {mediaItem.author || mediaItem.director || ''}
+                  </Text>
+                </Td>
+                <Td>
+                  <Text fontSize="sm">{item.episodeDate}</Text>
+                </Td>
+              </Tr>
+            ))
+          )}
+        </Tbody>
+      </Table>
+    </Box>
   )
 }
 
