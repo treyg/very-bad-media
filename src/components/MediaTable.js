@@ -1,6 +1,6 @@
 import { useState } from 'react'
-
-import { Table, Thead, Tbody, Tr, Th, Td, Text, Box } from '@chakra-ui/react'
+import SkeletonTable from '@/components/SkeletonTable'
+import { Table, Thead, Tbody, Tr, Th, Td, Text, Box, Skeleton } from '@chakra-ui/react'
 
 function formatDate(dateString) {
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
@@ -22,6 +22,10 @@ function fixType(type) {
 }
 
 const MediaTable = ({ episodes, mediaTypes }) => {
+  //   if (isLoading) {
+  //     return <SkeletonTable />
+  //   }
+
   const [sortField, setSortField] = useState(null)
   const [sortDirection, setSortDirection] = useState(null)
 
