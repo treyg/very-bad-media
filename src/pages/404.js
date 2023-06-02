@@ -13,7 +13,7 @@ const NotFoundPage = () => {
         Page Not Found
       </Heading>
       <Text fontSize="xl" mb="4">
-        The page you were looking for doesn't exist.
+        The page you were looking for doesn&apos;t exist.
       </Text>
       <Button
         as="a"
