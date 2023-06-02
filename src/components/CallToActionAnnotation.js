@@ -140,7 +140,7 @@ export default function CallToActionWithAnnotation() {
             >
               <Link href="/books">Books</Link>
             </Button>
-            <Button
+            {/* <Button
               colorScheme={buttonColor} // Set the button color scheme
               bg={buttonColor}
               px={6}
@@ -149,7 +149,7 @@ export default function CallToActionWithAnnotation() {
               }}
             >
               <Link href="/articles">Articles</Link>
-            </Button>
+            </Button> */}
           </Stack>
           <Button variant="link" color={accentColor}>
             <Link href="/about-site">Learn More</Link>
