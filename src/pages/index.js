@@ -49,13 +49,12 @@ export default function Home({ episodes }) {
 }
 
 export async function getServerSideProps() {
-  const response = await fetch('http://localhost:3000/api/data')
+  const response = await fetch('/api/data')
   const episodes = await response.json()
 
   return {
     props: {
       episodes
-      //isLoading: false
     }
   }
 }

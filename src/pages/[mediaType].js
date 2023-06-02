@@ -55,7 +55,7 @@ export async function getServerSideProps(context) {
     }
   }
 
-  const response = await fetch(`http://localhost:3000/api/data`, {
+  const response = await fetch(`/api/data`, {
     headers: {
       // 'Cache-Control': 'no-cache'
     }
