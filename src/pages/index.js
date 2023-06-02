@@ -1,25 +1,14 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
-import { useEffect, useState } from 'react'
+
 import CallToActionWithAnnotation from '@/components/CallToActionAnnotation'
 import DottedBox from '@/components/DottedBox'
 import BackgroundBlobs from '@/components/BackgroundBlobs'
 import MediaTable from '@/components/MediaTable'
 import { Box, Container, Heading } from '@chakra-ui/react'
 
-export default function Home() {
-  const [episodes, setEpisodes] = useState([])
-
-  useEffect(() => {
-    async function fetchMediaData() {
-      const response = await fetch('http://localhost:3000/api/data')
-      const media = await response.json()
-      setEpisodes(media)
-    }
-
-    fetchMediaData()
-  }, [])
+export default function Home({ episodes }) {
   return (
     <>
       <Head>
@@ -55,27 +44,18 @@ export default function Home() {
           ]}
         />
       </Box>
-
-      {/* {episodes.map((episode, index) => (
-          <div key={index}>
-            <h2>{episode.episode}</h2>
-            <p>{episode.link}</p>
-            <p>{episode.guid}</p>
-            <p>{episode.pubDate}</p>
-            <ul>
-              {Object.entries(episode.mediaList).map(([category, items]) => (
-                <li key={category}>
-                  <strong>{category}</strong>
-                  <ul>
-                    {Array.isArray(items)
-                      ? items.map((item, i) => <li key={i}>{JSON.stringify(item)}</li>)
-                      : null}
-                  </ul>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))} */}
     </>
   )
+}
+
+export async function getServerSideProps() {
+  const response = await fetch('http://localhost:3000/api/data')
+  const episodes = await response.json()
+
+  return {
+    props: {
+      episodes
+      //isLoading: false
+    }
+  }
 }

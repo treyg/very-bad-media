@@ -4,7 +4,7 @@ import { Box, Heading, Text } from '@chakra-ui/react'
 
 const headings = {
   books: 'Books',
-  shortStories: 'Short Stories',
+  shortstories: 'Short Stories',
   movies: 'Movies',
   tvshows: 'TV Shows',
   articles: 'Articles',
@@ -41,7 +41,7 @@ export async function getServerSideProps(context) {
   // Define the allowed media types
   const allowedMediaTypes = [
     'books',
-    'shortStories',
+    'shortstories',
     'movies',
     'tvshows',
     'articles',
