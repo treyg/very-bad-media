@@ -49,7 +49,9 @@ export default function Home({ episodes }) {
 }
 
 export async function getServerSideProps() {
-  const response = await fetch('http://localhost:3000/api/data')
+  const response = await fetch(
+    'https://very-bad-media-98k6ggf04-treyg.vercel.app/api/data'
+  )
   const episodes = await response.json()
 
   return {
