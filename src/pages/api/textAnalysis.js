@@ -17,7 +17,7 @@ async function analyzeText(text) {
   const conversation = [
     {
       role: 'system',
-      content: `You are a helpful assistant that parses text and identifies references to movies/films, TV shows, books, short stories, articles, essays. If the author for a book isn't directly mentioned, but you know who it is, feel free to add it. You should respond with nothing other than YAML. Organize the identified references into separate lists, each keyed by category in the response. Include the episode title and link in the response. Follow this exact format for the response. If you aren't sure if something is an article or an essay, just put it in the articles list. Make sure you return only valid YAML. Only include categories that are explicitly mentioned in the following example format. Remember, each category should appear only once in the mapping. The links for movies should be to letterboxd.com. Article links are found in the text being analyzed. Tv show, books, and short story links are not necessary.
+      content: `You are a helpful assistant that parses text and identifies references to movies/films, TV shows, books, short stories, articles, essays. If the author for a book isn't directly mentioned, but you know who it is, feel free to add it. You should respond with nothing other than YAML. Organize the identified references into separate lists, each keyed by category in the response. Include the episode title and link in the response. Follow this exact format for the response. If you aren't sure if something is an article or an essay, just put it in the articles list. Make sure you return only valid YAML. Only include categories that are explicitly mentioned in the following example format. Remember, each category should appear only once in the mapping. The links for movies should be to letterboxd.com. Article links are found in the text being analyzed. Tv show, books, and short story links are not necessary. It's very important you return only valid YAML.
 
         Example format:
         movies:
@@ -49,43 +49,23 @@ async function analyzeText(text) {
   const result = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     messages: conversation,
-    max_tokens: 2300,
+    max_tokens: 1800,
     temperature: 0.3
   })
 
+  //   if (result.data.error.message) {
+  //     console.log(result.data.error.message)
+  //     return
+  //   }
   console.log('Text analysis complete!')
   try {
     const yamlData = yaml.load(result.data.choices[0].message.content)
-    const categories = [
-      'movies',
-      'tvshows',
-      'books',
-      'shortstories',
-      'articles',
-      'essays'
-    ]
-
-    // Create a new object to hold the merged lists
-    let mergedData = {}
-
-    // Iterate over each category
-    for (let category of categories) {
-      // Check if the category exists in the data
-      if (yamlData[category]) {
-        // If the category already exists in the mergedData, append the new items
-        if (mergedData[category]) {
-          mergedData[category] = [...mergedData[category], ...yamlData[category]]
-        } else {
-          // If the category does not exist in the mergedData, add it
-          mergedData[category] = yamlData[category]
-        }
-      }
-    }
-
-    const jsonData = JSON.stringify(mergedData)
+    const jsonData = JSON.stringify(yamlData)
     return jsonData
   } catch (error) {
     console.error('Error parsing YAML:', error)
+    // Skip the current iteration
+    return undefined
   }
 }
 
