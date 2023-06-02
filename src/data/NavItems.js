@@ -46,6 +46,14 @@ const NAV_ITEMS = [
     href: '/shortstories'
   },
   {
+    label: 'Articles',
+    href: '/articles'
+  },
+  {
+    label: 'Essays',
+    href: '/essays'
+  },
+  {
     label: 'About',
     children: [
       {
