@@ -31,6 +31,8 @@ export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode() // Access the color mode and toggle function
 
+  const logoSrc = colorMode === 'dark' ? '/logo-dark.svg' : '/logo-light.svg'
+
   const backgroundColor = useColorModeValue(
     'light.backgroundColor',
     'dark.backgroundColor'
@@ -74,7 +76,7 @@ export default function WithSubnavigation() {
             color={useColorModeValue('gray.800', 'white')}
           >
             <Link href="/">
-              <Image src="/logo.svg" alt="Logo" width={50} height={50} />
+              <Image src={logoSrc} alt="Logo" width={50} height={50} />
             </Link>
           </Text>
 
