@@ -47,13 +47,11 @@ export default function Home({ episodes }) {
   )
 }
 export async function getStaticProps() {
-  const baseUrl = process.env.VERCEL_URL
-    ? process.env.VERCEL_URL
-    : 'http://localhost:3000'
+  const apiUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}/api/data`
+    : 'http://localhost:3000/api/data'
 
-  const url = `${baseUrl}/api/data`
-  console.log('Fetching from URL:', url)
-  const response = await fetch(`${baseUrl}/api/data`)
+  const response = await fetch(apiUrl)
 
   // Check if the request was successful
   if (!response.ok) {
