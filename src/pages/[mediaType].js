@@ -39,7 +39,7 @@ export async function getStaticProps({ params }) {
   const { mediaType } = params
 
   const apiUrl = process.env.API_URL
-    ? `https://${process.env.API_URL}/api/data`
+    ? `https://${process.env.API_URL}`
     : 'http://localhost:3000/api/data'
 
   const response = await fetch(apiUrl)

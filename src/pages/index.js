@@ -48,7 +48,7 @@ export default function Home({ episodes }) {
 }
 export async function getStaticProps() {
   const apiUrl = process.env.API_URL
-    ? `https://${process.env.API_URL}/api/data`
+    ? `https://${process.env.API_URL}`
     : 'http://localhost:3000/api/data'
   const response = await fetch(apiUrl)
 
