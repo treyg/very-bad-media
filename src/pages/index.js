@@ -59,15 +59,17 @@ export async function getStaticProps() {
     throw new Error(`API request failed with status ${response.status}`)
   }
 
+  const responseText = await response.text()
+  console.log('Raw response text:', responseText)
+
+  // Try to parse the response body as JSON
   // Try to parse the response body as JSON
   let episodes
   try {
-    episodes = await response.json()
+    episodes = JSON.parse(responseText)
   } catch (error) {
     // If parsing the response body as JSON failed, log the error and the response body
     console.error('Error parsing response body as JSON:', error)
-    const body = await response.text()
-    console.error('Response body:', body)
     throw error
   }
 
