@@ -50,8 +50,26 @@ export async function getStaticProps() {
   const baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : 'http://localhost:3000'
+
   const response = await fetch(`${baseUrl}/api/data`)
-  const episodes = await response.json()
+
+  // Check if the request was successful
+  if (!response.ok) {
+    // If the server returned an error status code, throw an error
+    throw new Error(`API request failed with status ${response.status}`)
+  }
+
+  // Try to parse the response body as JSON
+  let episodes
+  try {
+    episodes = await response.json()
+  } catch (error) {
+    // If parsing the response body as JSON failed, log the error and the response body
+    console.error('Error parsing response body as JSON:', error)
+    const body = await response.text()
+    console.error('Response body:', body)
+    throw error
+  }
 
   return {
     props: {
