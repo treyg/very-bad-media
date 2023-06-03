@@ -48,7 +48,9 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { mediaType } = params
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/data'
+  const apiUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/data`
+    : 'http://localhost:3000/api/data'
 
   const response = await fetch(apiUrl)
 

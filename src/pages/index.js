@@ -47,7 +47,10 @@ export default function Home({ episodes }) {
   )
 }
 export async function getStaticProps() {
-  const apiUrl = '/api/data'
+  const apiUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/data`
+    : 'http://localhost:3000/api/data'
+
   const response = await fetch(apiUrl)
 
   // Check if the request was successful
