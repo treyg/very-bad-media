@@ -46,7 +46,7 @@ export default function Home({ episodes }) {
     </>
   )
 }
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : 'http://localhost:3000'
@@ -56,6 +56,7 @@ export async function getServerSideProps() {
   return {
     props: {
       episodes
-    }
+    },
+    revalidate: 60 * 60 // Regenerate the page every hour
   }
 }

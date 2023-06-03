@@ -35,40 +35,30 @@ export default function MediaTypePage({ episodes }) {
   )
 }
 
-export async function getServerSideProps(context) {
-  const { mediaType } = context.query
+export async function getStaticPaths() {
+  const paths = ['books', 'shortstories', 'movies', 'tvshows', 'articles', 'essays'].map(
+    mediaType => ({
+      params: { mediaType }
+    })
+  )
 
-  // Define the allowed media types
-  const allowedMediaTypes = [
-    'books',
-    'shortstories',
-    'movies',
-    'tvshows',
-    'articles',
-    'essays'
-  ]
+  return { paths, fallback: false }
+}
 
-  // If the mediaType from the URL is not allowed, return a 404
-  if (!allowedMediaTypes.includes(mediaType)) {
-    return {
-      notFound: true
-    }
-  }
+export async function getStaticProps({ params }) {
+  const { mediaType } = params
 
   const baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : 'http://localhost:3000'
 
-  const response = await fetch(`${baseUrl}/api/data`, {
-    headers: {
-      // 'Cache-Control': 'no-cache'
-    }
-  })
+  const response = await fetch(`${baseUrl}/api/data`)
   const episodes = await response.json()
 
   return {
     props: {
       episodes
-    }
+    },
+    revalidate: 60 * 60 // Regenerate the page every hour
   }
 }

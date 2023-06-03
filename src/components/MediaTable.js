@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import SkeletonTable from '@/components/SkeletonTable'
 import { Table, Thead, Tbody, Tr, Th, Td, Text, Box, Skeleton } from '@chakra-ui/react'
+import { format } from 'date-fns'
 
 function formatDate(dateString) {
-  const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
-  const date = new Date(dateString)
-  return date.toLocaleDateString(undefined, options)
+  return format(new Date(dateString), 'MM/dd/yy')
 }
 
 const typeFixes = {
