@@ -35,6 +35,16 @@ export default function MediaTypePage({ episodes }) {
   )
 }
 
+export async function getStaticPaths() {
+  const paths = ['books', 'shortstories', 'movies', 'tvshows', 'articles', 'essays'].map(
+    mediaType => ({
+      params: { mediaType }
+    })
+  )
+
+  return { paths, fallback: false }
+}
+
 export async function getStaticProps({ params }) {
   const { mediaType } = params
 
