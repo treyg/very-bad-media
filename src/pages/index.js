@@ -51,6 +51,8 @@ export async function getStaticProps() {
     ? `https://${process.env.VERCEL_URL}`
     : 'http://localhost:3000'
 
+  const url = `${baseUrl}/api/data`
+  console.log('Fetching from URL:', url)
   const response = await fetch(`${baseUrl}/api/data`)
 
   // Check if the request was successful
