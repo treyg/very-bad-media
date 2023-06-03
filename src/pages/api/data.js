@@ -1,24 +1,25 @@
-import { kv } from '@vercel/kv'
-import { Response } from 'node-fetch'
+import { MongoClient } from 'mongodb'
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
-      // Fetch all keys from the KV store
-      const keys = await kv.keys('episode:*')
-      console.log(keys)
+      // Connect to MongoDB
+      const client = new MongoClient(process.env.MONGODB_URI)
+      await client.connect()
 
-      // Fetch the data for each key
-      const episodesData = []
-      for (const key of keys) {
-        const episodeData = await kv.get(key)
-        episodesData.push(episodeData)
-      }
+      // Get a reference to the collection where you're storing the data
+      const collection = client.db(process.env.MONGODB_DB).collection('episodes')
+
+      // Fetch all documents from the collection
+      const episodesData = await collection.find().toArray()
+
+      // Close the connection to MongoDB
+      await client.close()
 
       res.json(episodesData)
     } catch (error) {
-      console.error(error)
-      res.status(500).end()
+      console.error('An error occurred:', error)
+      res.status(500).json({ message: 'An error occurred', error: error.toString() })
     }
   } else {
     res.status(404).end()
