@@ -46,7 +46,6 @@ export default function Home({ episodes }) {
     </>
   )
 }
-
 export async function getServerSideProps() {
   const baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
