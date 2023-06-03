@@ -63,7 +63,13 @@ export async function getStaticProps() {
   console.log('Raw response text:', responseText)
 
   // Try to parse the response body as JSON
-  // Try to parse the response body as JSON
+  const contentType = response.headers.get('Content-Type')
+  if (!contentType || !contentType.includes('application/json')) {
+    console.error('Unexpected content type:', contentType)
+    console.error('Raw response text:', responseText)
+    throw new Error(`Unexpected content type: ${contentType}`)
+  }
+
   let episodes
   try {
     episodes = JSON.parse(responseText)
