@@ -47,10 +47,9 @@ export default function Home({ episodes }) {
   )
 }
 export async function getStaticProps() {
-  //   const apiUrl = process.env.VERCEL_URL
-  //     ? `https://${process.env.VERCEL_URL}/api/data`
-  //     : 'http://localhost:3000/api/data'
-  const apiUrl = 'https://very-bad-media.vercel.app/api/data'
+  const apiUrl = process.env.API_URL
+    ? `https://${process.env.API_URL}/api/data`
+    : 'http://localhost:3000/api/data'
   const response = await fetch(apiUrl)
 
   // Check if the request was successful
