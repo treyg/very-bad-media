@@ -48,7 +48,9 @@ export default function Home({ episodes }) {
 }
 
 export async function getServerSideProps() {
-  const baseUrl = process.env.VERCEL_URL || 'http://localhost:3000'
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000'
   const response = await fetch(`${baseUrl}/api/data`)
   const episodes = await response.json()
 
