@@ -35,16 +35,6 @@ export default function MediaTypePage({ episodes }) {
   )
 }
 
-export async function getStaticPaths() {
-  const paths = ['books', 'shortstories', 'movies', 'tvshows', 'articles', 'essays'].map(
-    mediaType => ({
-      params: { mediaType }
-    })
-  )
-
-  return { paths, fallback: false }
-}
-
 export async function getStaticProps({ params }) {
   const { mediaType } = params
 
@@ -60,6 +50,12 @@ export async function getStaticProps({ params }) {
     throw new Error(`API request failed with status ${response.status}`)
   }
 
+  // Check if the response has the correct content type
+  const contentType = response.headers.get('Content-Type')
+  if (!contentType || !contentType.includes('application/json')) {
+    throw new Error(`Unexpected content type: ${contentType}`)
+  }
+
   // Try to parse the response body as JSON
   let episodes
   try {
@@ -67,8 +63,6 @@ export async function getStaticProps({ params }) {
   } catch (error) {
     // If parsing the response body as JSON failed, log the error and the response body
     console.error('Error parsing response body as JSON:', error)
-    const body = await response.text()
-    console.error('Response body:', body)
     throw error
   }
 
@@ -78,4 +72,14 @@ export async function getStaticProps({ params }) {
     },
     revalidate: 60 * 60 // Regenerate the page every hour
   }
+}
+
+export async function getStaticPaths() {
+  const paths = ['books', 'shortstories', 'movies', 'tvshows', 'articles', 'essays'].map(
+    mediaType => ({
+      params: { mediaType }
+    })
+  )
+
+  return { paths, fallback: false }
 }

@@ -36,8 +36,8 @@ export default function Home({ episodes }) {
           mediaTypes={[
             'books',
             'movies',
-            'shortStories',
-            'tvShows',
+            'shortstories',
+            'tvshows',
             'articles',
             'essays'
           ]}
