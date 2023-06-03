@@ -55,14 +55,13 @@ export async function getServerSideProps(context) {
     }
   }
 
-  const response = await fetch(`http://localhost:3000/api/data`, {
+  const baseUrl = process.env.VERCEL_URL || 'http://localhost:3000'
+  const response = await fetch(`${baseUrl}/api/data`, {
     headers: {
       // 'Cache-Control': 'no-cache'
     }
   })
   const episodes = await response.json()
-
-  // You can filter the episodes based on the mediaType here if needed
 
   return {
     props: {

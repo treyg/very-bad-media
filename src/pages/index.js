@@ -23,7 +23,6 @@ export default function Home({ episodes }) {
 
       <Box position="relative">
         <DottedBox position="absolute" />
-        {/* <Image src="/logo.svg" alt="Very Bad Media" width="300" height="300" /> */}
         <BackgroundBlobs position="absolute" right="-200px" />
         <CallToActionWithAnnotation />
       </Box>
@@ -49,13 +48,13 @@ export default function Home({ episodes }) {
 }
 
 export async function getServerSideProps() {
-  const response = await fetch('http://localhost:3000/api/data')
+  const baseUrl = process.env.VERCEL_URL || 'http://localhost:3000'
+  const response = await fetch(`${baseUrl}/api/data`)
   const episodes = await response.json()
 
   return {
     props: {
       episodes
-      //isLoading: false
     }
   }
 }
