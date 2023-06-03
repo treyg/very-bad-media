@@ -48,7 +48,7 @@ export default function Home({ episodes }) {
 }
 export async function getStaticProps() {
   const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+    ? process.env.VERCEL_URL
     : 'http://localhost:3000'
 
   const url = `${baseUrl}/api/data`
