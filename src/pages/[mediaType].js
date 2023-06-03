@@ -55,14 +55,11 @@ export async function getServerSideProps(context) {
     }
   }
 
-  const response = await fetch(
-    `https://very-bad-media-98k6ggf04-treyg.vercel.app/api/data`,
-    {
-      headers: {
-        // 'Cache-Control': 'no-cache'
-      }
+  const response = await fetch(`http://localhost:3000/api/data`, {
+    headers: {
+      // 'Cache-Control': 'no-cache'
     }
-  )
+  })
   const episodes = await response.json()
 
   // You can filter the episodes based on the mediaType here if needed

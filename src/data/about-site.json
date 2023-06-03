@@ -1,4 +1,4 @@
 {
   "title": "About this Site",
-  "description": "This is a fan built site for the media discussed on the Very Bad Wizards podcast. The media lists are automated by running the RSS feed for the podcast through the Open AI api and analyzing the text to find the media discussed. The data is then stored in a database. There may be some errors in the data, but it will update daily and will dramatically improve when I get access to the newer API model."
+  "description": "This is a fan built site for the media discussed on the Very Bad Wizards podcast. The media lists are automated by running the RSS feed for the podcast through the Open AI api and analyzing the text to find the media discussed. The episode data is then stored in a database. There may be some errors currently, but it will update daily and will dramatically improve when I get access to the newer API model."
 }
