@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Input } from '@chakra-ui/react'
 import SkeletonTable from '@/components/SkeletonTable'
 import { Table, Thead, Tbody, Tr, Th, Td, Text, Box, Skeleton } from '@chakra-ui/react'
 import { format } from 'date-fns'
@@ -21,12 +22,10 @@ function fixType(type) {
 }
 
 const MediaTable = ({ episodes, mediaTypes }) => {
-  //   if (isLoading) {
-  //     return <SkeletonTable />
-  //   }
-
   const [sortField, setSortField] = useState(null)
   const [sortDirection, setSortDirection] = useState(null)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
 
   const data = episodes
     ? episodes
@@ -35,14 +34,20 @@ const MediaTable = ({ episodes, mediaTypes }) => {
             episodeTitle: episode.episode,
             episodeLink: episode.link,
             episodeDate: formatDate(episode.pubDate),
-            mediaType: type, // Use 'type' instead of 'mediaType'
-            media: episode.mediaList[type] || [] // Access mediaList[type] and provide an empty array as a fallback
+            mediaType: type,
+            media: episode.mediaList[type] || []
           }))
         )
         .reduce((acc, val) => acc.concat(val), [])
+        .filter(item => {
+          return item.media.some(
+            mediaItem =>
+              mediaItem.title &&
+              mediaItem.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+          )
+        })
     : []
 
-  // Sort data
   if (sortField !== null) {
     data.sort((a, b) => {
       if (a[sortField] < b[sortField]) {
@@ -55,6 +60,18 @@ const MediaTable = ({ episodes, mediaTypes }) => {
     })
   }
 
+  // Update debounced search term after user stops typing for 500ms
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm)
+    }, 500)
+
+    // Clear timeout if user types within the debounce period
+    return () => {
+      clearTimeout(timerId)
+    }
+  }, [searchTerm])
+
   const handleSort = field => {
     setSortField(field)
     setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
@@ -62,6 +79,14 @@ const MediaTable = ({ episodes, mediaTypes }) => {
 
   return (
     <Box overflowX="auto">
+      <Input
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+        mb={4}
+        maxWidth="400px"
+      />
+
       <Table variant="simple" minWidth="100%">
         <Thead>
           <Tr>
