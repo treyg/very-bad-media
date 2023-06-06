@@ -5,6 +5,7 @@ import DottedBox from '@/components/DottedBox'
 import BackgroundBlobs from '@/components/BackgroundBlobs'
 import MediaTable from '@/components/MediaTable'
 import { Box, Container, Heading } from '@chakra-ui/react'
+import MediaContainer from '@/components/MediaContainer'
 
 export default function Home({ episodes }) {
   return (
@@ -29,7 +30,7 @@ export default function Home({ episodes }) {
           Master List
         </Heading>
 
-        <MediaTable
+        <MediaContainer
           episodes={episodes}
           mediaTypes={[
             'books',
