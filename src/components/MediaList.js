@@ -12,7 +12,7 @@ function getIconForMediaType(mediaType) {
     case 'tvshows':
       return <BiMoviePlay />
     case 'books':
-    case 'shortstories':
+    case 'shortStories':
       return <BiBook />
     default:
       return null
@@ -23,7 +23,13 @@ const MediaList = ({ data = [] }) => (
   <VStack spacing={4} align="start" w="100%">
     {data.map((item, index) =>
       item.media.map((mediaItem, mIndex) => (
-        <Box w="100%" borderBottom="1px" borderColor="gray.200" py={4}>
+        <Box
+          key={`${index}-${mIndex}`}
+          w="100%"
+          borderBottom="1px"
+          borderColor="gray.200"
+          py={4}
+        >
           <Text fontSize="md" fontWeight="bold">
             <a href={mediaItem.link ? mediaItem.link : '#'}>{mediaItem.title}</a>
           </Text>
