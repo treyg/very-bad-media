@@ -14,7 +14,6 @@ export default async function handler(req, res) {
       let episodesData
       try {
         episodesData = await collection.find().toArray()
-        console.log(episodesData) // Log the data returned from MongoDB
       } catch (error) {
         console.error('Error fetching data from MongoDB:', error)
         res

@@ -53,10 +53,6 @@ async function analyzeText(text) {
     temperature: 0.3
   })
 
-  //   if (result.data.error.message) {
-  //     console.log(result.data.error.message)
-  //     return
-  //   }
   console.log('Text analysis complete!')
   try {
     const yamlData = yaml.load(result.data.choices[0].message.content)
