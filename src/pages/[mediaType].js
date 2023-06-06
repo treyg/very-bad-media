@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
-import MediaTable from '@/components/MediaTable'
 import { Box, Heading, Text } from '@chakra-ui/react'
+import MediaContainer from '@/components/MediaContainer'
 
 const headings = {
   books: 'Books',
@@ -30,17 +30,13 @@ export default function MediaTypePage({ episodes }) {
         </Text>
       </Heading>
 
-      <MediaTable episodes={episodes} mediaTypes={selectedMedia} />
+      <MediaContainer episodes={episodes} mediaTypes={selectedMedia} />
     </Box>
   )
 }
 
 export async function getStaticProps({ params }) {
   const { mediaType } = params
-
-  //   const apiUrl = process.env.VERCEL_URL
-  //     ? `https://${process.env.VERCEL_URL}/api/data`
-  //     : 'http://localhost:3000/api/data'
 
   const apiUrl = 'https://very-bad-media.vercel.app/api/data'
 
