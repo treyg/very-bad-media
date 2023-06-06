@@ -1,8 +1,18 @@
 import { useState, useEffect } from 'react'
-import { Input } from '@chakra-ui/react'
-import SkeletonTable from '@/components/SkeletonTable'
-import { Table, Thead, Tbody, Tr, Th, Td, Text, Box, Skeleton } from '@chakra-ui/react'
 import { format } from 'date-fns'
+import {
+  Input,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Text,
+  Box,
+  Skeleton
+} from '@chakra-ui/react'
+import SkeletonTable from '@/components/SkeletonTable'
 
 function formatDate(dateString) {
   return format(new Date(dateString), 'MM/dd/yy')
