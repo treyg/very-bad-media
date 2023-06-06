@@ -1,6 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
 
 import CallToActionWithAnnotation from '@/components/CallToActionAnnotation'
 import DottedBox from '@/components/DottedBox'
@@ -47,10 +45,6 @@ export default function Home({ episodes }) {
   )
 }
 export async function getStaticProps() {
-  //   const apiUrl = process.env.API_URL
-  //     ? `https://${process.env.API_URL}`
-  //     : 'http://localhost:3000/api/data'
-
   const apiUrl = 'https://very-bad-media.vercel.app/api/data'
   const response = await fetch(apiUrl)
 
@@ -61,7 +55,6 @@ export async function getStaticProps() {
   }
 
   const responseText = await response.text()
-  console.log('Raw response text:', responseText)
 
   // Try to parse the response body as JSON
   const contentType = response.headers.get('Content-Type')
