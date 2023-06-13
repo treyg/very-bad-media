@@ -47,6 +47,7 @@ export default function CallToActionWithAnnotation() {
             <Box display="flex" alignItems="center" justifyContent="center">
               <Box position="relative">
                 <Text
+                  as={'h1'}
                   fontWeight={600}
                   fontSize={{ base: '5xl', sm: '8xl', md: '10xl' }}
                   lineHeight={'110%'}
@@ -107,10 +108,11 @@ export default function CallToActionWithAnnotation() {
           </Heading>
           <Container marginInline="auto !important" mt="28px !important">
             <Text
+              as={'h2'}
               color={textColor} // Set the text color
             >
-              Media lists for books, movies, and short stories discussed on the Very Bad
-              Wizards podcast.
+              Media lists for books, movies, and short stories discussed and recommended
+              on the Very Bad Wizards podcast.
             </Text>
           </Container>
           <Stack
@@ -121,7 +123,7 @@ export default function CallToActionWithAnnotation() {
             position={'relative'}
           >
             <Button
-              colorScheme={buttonColor} // Set the button color scheme
+              colorScheme={buttonColor}
               bg={buttonColor}
               px={6}
               _hover={{
@@ -131,7 +133,7 @@ export default function CallToActionWithAnnotation() {
               <Link href="/movies">Movies</Link>
             </Button>
             <Button
-              colorScheme={buttonColor} // Set the button color scheme
+              colorScheme={buttonColor}
               bg={buttonColor}
               px={6}
               _hover={{
@@ -141,7 +143,7 @@ export default function CallToActionWithAnnotation() {
               <Link href="/books">Books</Link>
             </Button>
             {/* <Button
-              colorScheme={buttonColor} // Set the button color scheme
+              colorScheme={buttonColor} 
               bg={buttonColor}
               px={6}
               _hover={{
