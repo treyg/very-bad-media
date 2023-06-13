@@ -19,6 +19,8 @@ export default function SocialProfileSimple({
   hashtags,
   twitterUrl
 }) {
+  const bg = useColorModeValue('gray.50', 'gray.800')
+
   return (
     <Center py={6}>
       <Box
@@ -49,13 +51,7 @@ export default function SocialProfileSimple({
 
         <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
           {hashtags.map((hashtag, index) => (
-            <Badge
-              key={index}
-              px={2}
-              py={1}
-              bg={useColorModeValue('gray.50', 'gray.800')}
-              fontWeight={'400'}
-            >
+            <Badge key={index} px={2} py={1} bg={bg} fontWeight={'400'}>
               {hashtag}
             </Badge>
           ))}
