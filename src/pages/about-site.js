@@ -26,7 +26,7 @@ const AboutSite = () => {
           podcast. The media lists are automated by running the RSS feed for the podcast
           through the Open AI api and analyzing the text to find the media discussed. The
           episode data is then stored in a database. The site is built with Next.js and
-          Chakra UI. Reach out to me if you'd like to contribute or make suggestions!
+          Chakra UI. Reach out to me if you&apos;d like to contribute or make suggestions!
         </Text>
       </Stack>
 
@@ -46,7 +46,7 @@ const AboutSite = () => {
         </SimpleGrid>
       </Container>
 
-      <Container maxW={'3xl'} textAlign={'center'} mt={20} ml={0}>
+      <Container maxW={'3xl'} textAlign={'center'} mt={20} mx={'auto'}>
         <Link href="https://www.buymeacoffee.com/TreyG" isExternal>
           <Image src="/coffee.svg" alt="Buy me a coffee" width={150} height={150} />
         </Link>
