@@ -47,9 +47,9 @@ async function analyzeText(text) {
   ]
 
   const result = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4',
     messages: conversation,
-    max_tokens: 1800,
+    max_tokens: 3000,
     temperature: 0.3
   })
 

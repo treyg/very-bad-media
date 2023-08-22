@@ -6,7 +6,7 @@ export async function connectToDb() {
   await client.connect()
   console.log('Connected to MongoDB.')
 
-  const collection = client.db(process.env.MONGODB_DB).collection('episodes')
+  const collection = client.db(process.env.MONGODB_DB).collection('episodesGPT4')
   return { client, collection }
 }
 

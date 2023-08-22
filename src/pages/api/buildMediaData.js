@@ -10,9 +10,10 @@ import {
 export async function buildData(rssFeedUrl) {
   const { client, collection } = await connectToDb()
 
-  console.log('Fetching RSS feed...')
   const episodes = await fetchRss(rssFeedUrl)
   console.log('Fetched RSS feed.')
+
+  let requestCount = 0 // Track the number of requests made
 
   for (const episode of episodes) {
     // Use the episode guid as the key
@@ -54,8 +55,16 @@ export async function buildData(rssFeedUrl) {
 
     await insertEpisodeData(collection, episodeData)
 
-    // Wait for 1 second before the next iteration
-    await new Promise(resolve => setTimeout(resolve, 3000))
+    requestCount++
+
+    // If made 3 requests, wait a minute before making the next one
+    if (requestCount % 3 === 0) {
+      console.log('Waiting for 1 minute to avoid rate limits...')
+      await new Promise(resolve => setTimeout(resolve, 60000))
+    } else {
+      // Otherwise, wait for 20 seconds before the next iteration
+      await new Promise(resolve => setTimeout(resolve, 20000))
+    }
   }
 
   await closeDbConnection(client)
