@@ -7,7 +7,7 @@ export default async function handler(req, res) {
       const client = new MongoClient(process.env.MONGODB_URI)
       await client.connect()
 
-      const collection = client.db(process.env.MONGODB_DB).collection('episodes')
+      const collection = client.db(process.env.MONGODB_DB).collection('episodesGPT4')
 
       // Fetch all documents from the collection
       let episodesData
