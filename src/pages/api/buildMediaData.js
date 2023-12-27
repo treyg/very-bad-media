@@ -67,7 +67,20 @@ export async function buildData(rssFeedUrl) {
     }
   }
 
+
   await closeDbConnection(client)
 }
 
-buildData('http://feeds.libsyn.com/474285/rss')
+//buildData('http://feeds.libsyn.com/474285/rss')
+
+export default async function handler(req, res) {
+   try {
+     await buildData('http://feeds.libsyn.com/474285/rss');
+ 
+     res.status(200).json({ message: 'Data build successful' });
+   } catch (error) {
+     console.error('Error in buildData:', error);
+     res.status(500).json({ error: 'Internal Server Error' });
+   }
+ }
+ 

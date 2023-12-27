@@ -2,7 +2,7 @@
   "crons": [
     {
       "schedule": "30 23 * * *",
-      "path": "/api/buildMediaData.js"
+      "path": "/api/buildMediaData"
     }
   ]
 }
