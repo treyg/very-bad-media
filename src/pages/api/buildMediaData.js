@@ -10,7 +10,11 @@ import {
 export async function buildData(rssFeedUrl) {
   const { client, collection } = await connectToDb();
 
-  const episodes = await fetchRss(rssFeedUrl);
+  const episodes = await fetchRss(
+    rssFeedUrl,
+    new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+  );
+
   console.log("Fetched RSS feed.");
 
   const episodePromises = episodes.map(async (episode) => {
