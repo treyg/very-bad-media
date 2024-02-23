@@ -17,6 +17,7 @@ export default function Home({ episodes }) {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <script defer data-domain="verybad.media" src="https://plausible.tagweb.dev/js/script.js"></script>
       </Head>
 
       <Box position="relative">
