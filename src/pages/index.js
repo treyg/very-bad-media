@@ -50,7 +50,8 @@ export default function Home({ episodes }) {
   );
 }
 export async function getStaticProps() {
-  const apiUrl = process.env.API_URL;
+  const apiUrl = "https://very-bad-media.vercel.app/api/data";
+
   const response = await fetch(apiUrl);
 
   if (!response.ok) {
