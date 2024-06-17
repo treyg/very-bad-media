@@ -46,18 +46,15 @@ export default function Home({ episodes }) {
   )
 }
 export async function getStaticProps() {
-  const apiUrl = 'https://very-bad-media.vercel.app/api/data'
+  const apiUrl = process.env.API_URL;
   const response = await fetch(apiUrl)
 
-  // Check if the request was successful
   if (!response.ok) {
-    // If the server returned an error status code, throw an error
     throw new Error(`API request failed with status ${response.status}`)
   }
 
   const responseText = await response.text()
 
-  // Try to parse the response body as JSON
   const contentType = response.headers.get('Content-Type')
   if (!contentType || !contentType.includes('application/json')) {
     console.error('Unexpected content type:', contentType)
@@ -69,7 +66,6 @@ export async function getStaticProps() {
   try {
     episodes = JSON.parse(responseText)
   } catch (error) {
-    // If parsing the response body as JSON failed, log the error and the response body
     console.error('Error parsing response body as JSON:', error)
     throw error
   }
