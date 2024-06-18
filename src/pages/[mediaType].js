@@ -39,7 +39,7 @@ export default function MediaTypePage({ episodes }) {
 export async function getStaticProps({ params }) {
   const { mediaType } = params;
 
-  const apiUrl = "https://very-bad-media.vercel.app/api/data";
+  const apiUrl = process.env.API_URL;
 
   const response = await fetch(apiUrl);
 

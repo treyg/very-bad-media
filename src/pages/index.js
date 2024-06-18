@@ -49,8 +49,12 @@ export default function Home({ episodes }) {
     </>
   );
 }
+
 export async function getStaticProps() {
-  const apiUrl = "https://very-bad-media.vercel.app/api/data";
+  const apiUrl = process.env.API_URL;
+  console.log("API FOOOO", apiUrl);
+  console.log("mongo", process.env.MONGODB_URI);
+  console.log("mongo", process.env.MONGODB_DB);
 
   const response = await fetch(apiUrl);
 
