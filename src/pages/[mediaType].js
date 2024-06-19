@@ -39,7 +39,7 @@ export default function MediaTypePage({ episodes }) {
 export async function getStaticProps({ params }) {
   const { mediaType } = params;
 
-  const apiUrl = "http://localhost:3000/api/data";
+  const apiUrl = "https://verybad.media/api/data";
 
   const response = await fetch(apiUrl);
 

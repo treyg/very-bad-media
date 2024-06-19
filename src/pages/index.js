@@ -51,7 +51,7 @@ export default function Home({ episodes }) {
 }
 
 export async function getStaticProps() {
-  const apiUrl = "http://localhost:3000/api/data";
+  const apiUrl = "https://verybad.media/api/data";
   console.log("mong", process.env.MONGODB_URI);
   const response = await fetch(apiUrl);
 
