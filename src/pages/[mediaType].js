@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import MediaContainer from "@/components/MediaContainer";
+import { MongoClient } from "mongodb";
 
 const headings = {
   books: "Books",
@@ -39,39 +40,43 @@ export default function MediaTypePage({ episodes }) {
 export async function getStaticProps({ params }) {
   const { mediaType } = params;
 
-  const apiUrl = process.env.API_URL || "http://localhost:3000/api/data";
+  console.log(`Fetching data for media type: ${mediaType}`);
+  const client = new MongoClient(process.env.MONGODB_URI);
 
-  const response = await fetch(apiUrl);
-
-  // Check if the request was successful
-  if (!response.ok) {
-    // If the server returned an error status code, throw an error
-    throw new Error(`API request failed with status ${response.status}`);
-  }
-
-  // Check if the response has the correct content type
-  const contentType = response.headers.get("Content-Type");
-  if (!contentType || !contentType.includes("application/json")) {
-    console.error("Unexpected content type:", contentType);
-    console.error("Raw response text:", await response.text());
-    throw new Error(`Unexpected content type: ${contentType}`);
-  }
-  // Try to parse the response body as JSON
-  let episodes;
   try {
-    episodes = await response.json();
-  } catch (error) {
-    // If parsing the response body as JSON failed, log the error and the response body
-    console.error("Error parsing response body as JSON:", error);
-    throw error;
-  }
+    await client.connect();
+    console.log("Connected to MongoDB.");
 
-  return {
-    props: {
-      episodes,
-    },
-    revalidate: 60 * 60, // Regenerate the page every hour
-  };
+    const collection = client
+      .db(process.env.MONGODB_DB)
+      .collection("episodesGPT4");
+    console.log("Fetching episodes from MongoDB...");
+
+    let episodes = await collection.find().toArray();
+
+    episodes = JSON.parse(JSON.stringify(episodes));
+
+    console.log(`Fetched ${episodes.length} episodes.`);
+
+    return {
+      props: {
+        episodes,
+      },
+      revalidate: 60 * 60, // Regenerate the page every hour
+    };
+  } catch (error) {
+    console.error("Error fetching data from MongoDB:", error);
+    return {
+      props: {
+        episodes: [],
+        error: "Failed to fetch episodes",
+      },
+    };
+  } finally {
+    console.log("Closing connection to MongoDB...");
+    await client.close();
+    console.log("Closed connection to MongoDB.");
+  }
 }
 
 export async function getStaticPaths() {
