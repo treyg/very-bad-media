@@ -68,12 +68,23 @@ export async function buildData(rssFeedUrl) {
 //buildData('http://feeds.libsyn.com/474285/rss')
 
 export default async function handler(req, res) {
+  const authHeader = req.headers.authorization;
+  if (
+    !process.env.CRON_SECRET ||
+    authHeader !== `Bearer ${process.env.CRON_SECRET}`
+  ) {
+    return res.status(401).json({ success: false, error: "Unauthorized" });
+  }
+
   try {
     await buildData("http://feeds.libsyn.com/474285/rss");
-
-    res.status(200).json({ message: "Data build successful" });
+    res.status(200).json({ success: true, message: "Data build successful" });
   } catch (error) {
     console.error("Error in buildData:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error",
+      details: error.message,
+    });
   }
 }
