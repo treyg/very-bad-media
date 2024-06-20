@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Script from "next/script";
 import { MongoClient } from "mongodb";
 import CallToActionWithAnnotation from "@/components/CallToActionAnnotation";
 import DottedBox from "@/components/DottedBox";
@@ -18,11 +17,6 @@ export default function Home({ episodes }) {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <Script
-          defer
-          data-domain="verybad.media"
-          src="https://plausible.tagweb.dev/js/script.js"
-        />
       </Head>
 
       <Box position="relative">
