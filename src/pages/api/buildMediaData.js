@@ -5,7 +5,7 @@ import {
   checkExistingEpisode,
   insertEpisodeData,
   closeDbConnection,
-} from "./mongodb.js";
+} from "./mongoDb.js";
 
 export async function buildData(rssFeedUrl) {
   const { client, collection } = await connectToDb();
