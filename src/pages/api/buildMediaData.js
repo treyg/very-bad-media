@@ -7,6 +7,8 @@ import {
   closeDbConnection,
 } from "./mongoDb.js";
 
+export const dynamic = "force-dynamic";
+
 export async function buildData(rssFeedUrl) {
   const { client, collection } = await connectToDb();
 
