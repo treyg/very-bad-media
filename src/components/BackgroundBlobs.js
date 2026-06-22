@@ -10,7 +10,7 @@ const BackgroundBlobs = ({ ...props }) => {
     <Box
       {...props}
       inset="0"
-      display="grid"
+      display={{ base: 'none', md: 'grid' }}
       placeItems="center"
       opacity="0.2"
       width="max-content"
