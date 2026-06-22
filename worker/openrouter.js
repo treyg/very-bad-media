@@ -86,10 +86,26 @@ function normalize(raw) {
 }
 
 /**
- * Extract media references from an episode's text.
+ * Extract media references from an episode's text, with retries.
  * Returns { movies: [...], books: [...], ... } (only non-empty categories).
  */
 export async function extractMedia(episode, env, model = env.OPENROUTER_MODEL) {
+  const maxAttempts = 3;
+  let lastErr;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      return await requestOnce(episode, env, model);
+    } catch (err) {
+      lastErr = err;
+      if (attempt < maxAttempts) {
+        await new Promise((r) => setTimeout(r, 600 * attempt));
+      }
+    }
+  }
+  throw lastErr;
+}
+
+async function requestOnce(episode, env, model) {
   const res = await fetch(OPENROUTER_URL, {
     method: "POST",
     headers: {
@@ -102,7 +118,7 @@ export async function extractMedia(episode, env, model = env.OPENROUTER_MODEL) {
     body: JSON.stringify({
       model,
       temperature: 0.3,
-      max_tokens: 3000,
+      max_tokens: 8000,
       // Force the exact output shape; only route to providers that support it.
       response_format: {
         type: "json_schema",
@@ -125,8 +141,24 @@ export async function extractMedia(episode, env, model = env.OPENROUTER_MODEL) {
   }
 
   const data = await res.json();
-  const content = data?.choices?.[0]?.message?.content;
-  if (!content) throw new Error("OpenRouter returned no message content");
+  const choice = data?.choices?.[0];
+  const content = choice?.message?.content;
+  const finish = choice?.finish_reason;
 
-  return normalize(parseModelJson(content));
+  if (!content) {
+    throw new Error(`OpenRouter returned no content (finish_reason: ${finish})`);
+  }
+
+  try {
+    return normalize(parseModelJson(content));
+  } catch (err) {
+    const s = String(content);
+    // Head + tail reveals truncation (tail cut mid-token) vs mid-string
+    // malformation (e.g. an unescaped quote/control char).
+    throw new Error(
+      `Parse failed (finish_reason: ${finish}, length: ${s.length}): ${err.message}\n` +
+        `HEAD: ${s.slice(0, 200)}\n` +
+        `TAIL: ${s.slice(-200)}`
+    );
+  }
 }

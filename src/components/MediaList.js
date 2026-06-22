@@ -20,7 +20,7 @@ function getIconForMediaType(mediaType) {
 }
 
 const MediaList = ({ data = [] }) => (
-  <VStack spacing={4} align="start" w="100%">
+  <VStack gap={4} align="start" w="100%">
     {data.map((item, index) =>
       item.media.map((mediaItem, mIndex) => (
         <Box

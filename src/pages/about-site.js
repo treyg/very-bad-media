@@ -5,19 +5,18 @@ import {
   Text,
   Stack,
   SimpleGrid,
-  Icon,
   HStack,
-  VStack
+  VStack,
+  Link
 } from '@chakra-ui/react'
-import { CheckIcon } from '@chakra-ui/icons'
+import { FaCheck } from 'react-icons/fa'
 import Image from 'next/image'
-import { Link } from '@chakra-ui/react'
 import features from '../data/features'
 
 const AboutSite = () => {
   return (
     <Box p={4} mt={16}>
-      <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
+      <Stack gap={4} as={Container} maxW={'3xl'} textAlign={'center'}>
         <Heading as={'h1'} fontSize={'3xl'}>
           About Very Bad Media
         </Heading>
@@ -31,11 +30,11 @@ const AboutSite = () => {
       </Stack>
 
       <Container maxW={'6xl'} mt={10}>
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}>
+        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={10}>
           {features.map(feature => (
             <HStack key={feature.id} align={'top'}>
               <Box color={'green.400'} px={2}>
-                <Icon as={CheckIcon} />
+                <FaCheck />
               </Box>
               <VStack align={'start'}>
                 <Text fontWeight={600}>{feature.title}</Text>
@@ -47,7 +46,11 @@ const AboutSite = () => {
       </Container>
 
       <Container maxW={'3xl'} textAlign={'center'} mt={20} mx={'auto'}>
-        <Link href="https://www.buymeacoffee.com/TreyG" isExternal>
+        <Link
+          href="https://www.buymeacoffee.com/TreyG"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Image src="/coffee.svg" alt="Buy me a coffee" width={150} height={150} />
         </Link>
       </Container>

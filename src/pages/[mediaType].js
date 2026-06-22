@@ -45,6 +45,11 @@ export default function MediaTypePage() {
   );
 }
 
+// Data is fetched client-side; this exists only so getStaticPaths is honored.
+export async function getStaticProps() {
+  return { props: {} };
+}
+
 export async function getStaticPaths() {
   const paths = [
     "books",

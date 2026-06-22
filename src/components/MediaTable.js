@@ -1,10 +1,11 @@
-import { Table, Thead, Tbody, Tr, Th, Td, Text } from "@chakra-ui/react";
+import { Table, Text, Link } from "@chakra-ui/react";
 import { fixType } from "../utils/utils";
+
 const MediaTable = ({
   data,
   sortField,
-  setSortField,
   sortDirection,
+  setSortField,
   setSortDirection,
 }) => {
   const handleSortByDate = () => {
@@ -15,50 +16,56 @@ const MediaTable = ({
   };
 
   return (
-    <Table variant="simple" minWidth="100%">
-      <Thead>
-        <Tr>
-          <Th>Title</Th>
-          <Th>Type</Th>
-          <Th>Author</Th>
-          <Th cursor="pointer" onClick={handleSortByDate}>
+    <Table.Root
+      variant="line"
+      size="sm"
+      minWidth="100%"
+      bg="transparent"
+      css={{
+        "& th, & td, & thead, & tbody, & tr": { background: "transparent" },
+      }}
+    >
+      <Table.Header>
+        <Table.Row>
+          <Table.ColumnHeader>Title</Table.ColumnHeader>
+          <Table.ColumnHeader>Type</Table.ColumnHeader>
+          <Table.ColumnHeader>Author</Table.ColumnHeader>
+          <Table.ColumnHeader cursor="pointer" onClick={handleSortByDate}>
             Date{" "}
             {sortField === "episodeDate"
               ? sortDirection === "asc"
                 ? "↑"
                 : "↓"
               : ""}
-          </Th>
-        </Tr>
-      </Thead>
-      <Tbody>
+          </Table.ColumnHeader>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {data.map((item, index) =>
           item.media.map((mediaItem, mIndex) => (
-            <Tr key={`${index}-${mIndex}`}>
-              <Td>
+            <Table.Row key={`${index}-${mIndex}`}>
+              <Table.Cell>
                 <Text fontSize="md" fontWeight="bold">
-                  <a href={mediaItem.link ? mediaItem.link : "#"}>
-                    {mediaItem.title}
-                  </a>
+                  <Link href={mediaItem.link || "#"}>{mediaItem.title}</Link>
                 </Text>
                 <Text fontSize="sm" color="gray.500">
-                  <a href={item.episodeLink}>{item.episodeTitle}</a>
+                  <Link href={item.episodeLink}>{item.episodeTitle}</Link>
                 </Text>
-              </Td>
-              <Td>
+              </Table.Cell>
+              <Table.Cell>
                 <Text fontSize="sm">{fixType(item.mediaType)}</Text>
-              </Td>
-              <Td>
+              </Table.Cell>
+              <Table.Cell>
                 <Text fontSize="sm">{mediaItem.creator || ""}</Text>
-              </Td>
-              <Td>
+              </Table.Cell>
+              <Table.Cell>
                 <Text fontSize="sm">{item.episodeDate}</Text>
-              </Td>
-            </Tr>
+              </Table.Cell>
+            </Table.Row>
           ))
         )}
-      </Tbody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   );
 };
 

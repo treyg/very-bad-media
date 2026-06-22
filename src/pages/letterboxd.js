@@ -6,12 +6,12 @@ import {
   Text,
   SimpleGrid,
   Link,
-  Divider,
-  useColorModeValue,
+  Separator,
   Flex,
   Spinner,
   Center
 } from '@chakra-ui/react'
+import { useColorModeValue } from '@/components/ui/color-mode'
 import DOMPurify from 'isomorphic-dompurify'
 import { fetchLetterboxd } from '@/lib/api'
 
@@ -57,7 +57,7 @@ export default function LetterboxdPage() {
       <Heading as="h1" mb={6}>
         Tamler&apos;s Letterboxd Reviews
       </Heading>
-      <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={6}>
+      <SimpleGrid columns={{ base: 1, lg: 2 }} gap={6}>
         {entries.map((entry, index) => {
           const cleanHtml = DOMPurify.sanitize(entry.description)
 
@@ -72,7 +72,12 @@ export default function LetterboxdPage() {
               shadow="sm"
               display="flex"
               flexDirection="column">
-              <Link href={entry.link} isExternal color="teal.500">
+              <Link
+                href={entry.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                color="teal.500"
+              >
                 <Heading as="h2" size="md" mb={2}>
                   {entry.title}
                 </Heading>
@@ -103,9 +108,14 @@ export default function LetterboxdPage() {
                   flex="1"
                   dangerouslySetInnerHTML={{ __html: cleanHtml }}
                 />
-                <Divider />
+                <Separator />
                 <Box pt={4}>
-                  <Link href={entry.link} color="teal.500" isExternal>
+                  <Link
+                    href={entry.link}
+                    color="teal.500"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     View on Letterboxd →
                   </Link>
                 </Box>
