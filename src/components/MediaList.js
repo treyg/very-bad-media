@@ -36,7 +36,7 @@ const MediaList = ({ data = [] }) => (
           <Text fontSize="sm">
             <Box as="span" display="inline-flex" alignItems="center" gap={1}>
               {getIconForMediaType(item.mediaType)}
-              {fixType(item.mediaType)} {mediaItem.author ? `- ${mediaItem.author}` : ''}
+              {fixType(item.mediaType)} {mediaItem.creator ? `- ${mediaItem.creator}` : ''}
             </Box>
           </Text>
           <Text fontSize="sm" color="gray.500">

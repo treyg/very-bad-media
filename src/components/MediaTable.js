@@ -49,9 +49,7 @@ const MediaTable = ({
                 <Text fontSize="sm">{fixType(item.mediaType)}</Text>
               </Td>
               <Td>
-                <Text fontSize="sm">
-                  {mediaItem.author || mediaItem.director || ""}
-                </Text>
+                <Text fontSize="sm">{mediaItem.creator || ""}</Text>
               </Td>
               <Td>
                 <Text fontSize="sm">{item.episodeDate}</Text>

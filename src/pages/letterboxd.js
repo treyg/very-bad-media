@@ -13,6 +13,7 @@ import {
   Center
 } from '@chakra-ui/react'
 import DOMPurify from 'isomorphic-dompurify'
+import { fetchLetterboxd } from '@/lib/api'
 
 export default function LetterboxdPage() {
   const [entries, setEntries] = useState([])
@@ -23,24 +24,16 @@ export default function LetterboxdPage() {
   const borderColor = useColorModeValue('gray.200', 'gray.700')
 
   useEffect(() => {
-    const fetchLetterboxdData = async () => {
-      setLoading(true)
-      setError(null)
-      try {
-        const response = await fetch('/api/letterboxd')
-        if (!response.ok) {
-          throw new Error('Failed to fetch data')
-        }
-        const data = await response.json()
-        setEntries(data)
-      } catch (err) {
-        setError(err.message)
-      } finally {
-        setLoading(false)
-      }
+    let active = true
+    setLoading(true)
+    setError(null)
+    fetchLetterboxd()
+      .then(data => active && setEntries(data))
+      .catch(err => active && setError(err.message))
+      .finally(() => active && setLoading(false))
+    return () => {
+      active = false
     }
-
-    fetchLetterboxdData()
   }, [])
 
   if (loading) {
