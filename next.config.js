@@ -1,31 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  experimental: {
-    edgeApiResolver: true
-  },
-  async headers() {
-    return [
-      {
-        source: '/api/:path*',
-        headers: [
-          { key: 'Access-Control-Allow-Credentials', value: 'true' },
-
-          { key: 'Access-Control-Allow-Origin', value: '*' },
-
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value:
-              'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-          }
-        ]
-      }
-    ]
-  }
+  // Static HTML export — deploys to Cloudflare as plain assets.
+  // Data is fetched client-side from the Worker API (NEXT_PUBLIC_API_BASE).
+  output: 'export',
+  trailingSlash: true,
+  images: { unoptimized: true }
 }
 
 module.exports = nextConfig

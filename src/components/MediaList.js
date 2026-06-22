@@ -1,52 +1,58 @@
-import { BiBook, BiMoviePlay } from 'react-icons/bi'
-import { MdOutlineArticle } from 'react-icons/md'
-import { VStack, Text, Box } from '@chakra-ui/react'
-import { fixType } from '../utils/utils'
+import { VStack, Box, Text, Link, Badge, Icon, HStack } from "@chakra-ui/react";
+import { LuExternalLink, LuHeadphones } from "react-icons/lu";
+import { fixType, typeColor } from "../utils/utils";
 
-function getIconForMediaType(mediaType) {
-  switch (mediaType) {
-    case 'articles':
-    case 'essays':
-      return <MdOutlineArticle />
-    case 'movies':
-    case 'tvshows':
-      return <BiMoviePlay />
-    case 'books':
-    case 'shortStories':
-      return <BiBook />
-    default:
-      return null
-  }
-}
+const MediaList = ({ rows = [] }) => (
+  <VStack gap={4} align="start" w="100%">
+    {rows.map((r, index) => (
+      <Box
+        key={index}
+        w="100%"
+        borderBottom="1px solid"
+        borderColor="gray.700"
+        pb={4}
+      >
+        <Text fontSize="md" fontWeight="bold">
+          {r.mediaLink ? (
+            <Link
+              href={r.mediaLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              display="inline-flex"
+              alignItems="center"
+              gap={1}
+            >
+              {r.mediaTitle}
+              <Icon as={LuExternalLink} boxSize={3} color="gray.500" />
+            </Link>
+          ) : (
+            r.mediaTitle
+          )}
+        </Text>
 
-const MediaList = ({ data = [] }) => (
-  <VStack spacing={4} align="start" w="100%">
-    {data.map((item, index) =>
-      item.media.map((mediaItem, mIndex) => (
-        <Box
-          key={`${index}-${mIndex}`}
-          w="100%"
-          borderBottom="1px"
-          borderColor="gray.200"
-          py={4}
+        <HStack gap={2} my={1}>
+          <Badge colorPalette={typeColor(r.mediaType)}>
+            {fixType(r.mediaType)}
+          </Badge>
+          {r.mediaCreator && <Text fontSize="sm">{r.mediaCreator}</Text>}
+        </HStack>
+
+        <Link
+          href={r.episodeLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          fontSize="sm"
+          color="gray.500"
+          display="inline-flex"
+          alignItems="center"
+          gap={1}
         >
-          <Text fontSize="md" fontWeight="bold">
-            <a href={mediaItem.link ? mediaItem.link : '#'}>{mediaItem.title}</a>
-          </Text>
-          <Text fontSize="sm">
-            <Box as="span" display="inline-flex" alignItems="center" gap={1}>
-              {getIconForMediaType(item.mediaType)}
-              {fixType(item.mediaType)} {mediaItem.author ? `- ${mediaItem.author}` : ''}
-            </Box>
-          </Text>
-          <Text fontSize="sm" color="gray.500">
-            <a href={item.episodeLink}>{item.episodeTitle}</a>
-          </Text>
-          {/* <Text fontSize="sm">{item.episodeDate}</Text> */}
-        </Box>
-      ))
-    )}
+          <Icon as={LuHeadphones} boxSize={3} />
+          {r.episodeTitle}
+        </Link>
+      </Box>
+    ))}
   </VStack>
-)
+);
 
-export default MediaList
+export default MediaList;

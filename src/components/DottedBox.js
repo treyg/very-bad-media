@@ -1,4 +1,5 @@
-import { Box, useColorModeValue } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
+import { useColorModeValue } from '@/components/ui/color-mode'
 
 function DottedBox({ ...props }) {
   return (

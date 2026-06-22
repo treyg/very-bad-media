@@ -1,36 +1,44 @@
-import { Box, Table, Thead, Tbody, Tr, Th, Td, Skeleton } from '@chakra-ui/react'
+import { Box, Table, Skeleton } from "@chakra-ui/react";
 
 const SkeletonTable = () => (
   <Box overflowX="auto">
-    <Table variant="simple" minWidth="100%">
-      <Thead>
-        <Tr>
-          <Th>Title</Th>
-          <Th>Type</Th>
-          <Th>Author</Th>
-          <Th>Date</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
+    <Table.Root
+      variant="line"
+      size="sm"
+      minWidth="100%"
+      bg="transparent"
+      css={{
+        "& th, & td, & thead, & tbody, & tr": { background: "transparent" },
+      }}
+    >
+      <Table.Header>
+        <Table.Row>
+          <Table.ColumnHeader>Title</Table.ColumnHeader>
+          <Table.ColumnHeader>Type</Table.ColumnHeader>
+          <Table.ColumnHeader>Author</Table.ColumnHeader>
+          <Table.ColumnHeader>Date</Table.ColumnHeader>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {[...Array(10)].map((_, index) => (
-          <Tr key={index}>
-            <Td>
+          <Table.Row key={index}>
+            <Table.Cell>
               <Skeleton height="20px" />
-            </Td>
-            <Td>
+            </Table.Cell>
+            <Table.Cell>
               <Skeleton height="20px" />
-            </Td>
-            <Td>
+            </Table.Cell>
+            <Table.Cell>
               <Skeleton height="20px" />
-            </Td>
-            <Td>
+            </Table.Cell>
+            <Table.Cell>
               <Skeleton height="20px" />
-            </Td>
-          </Tr>
+            </Table.Cell>
+          </Table.Row>
         ))}
-      </Tbody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   </Box>
-)
+);
 
-export default SkeletonTable
+export default SkeletonTable;

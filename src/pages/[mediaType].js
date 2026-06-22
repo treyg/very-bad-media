@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import MediaContainer from "@/components/MediaContainer";
-import { MongoClient } from "mongodb";
+import SkeletonTable from "@/components/SkeletonTable";
+import { fetchEpisodes, useFetch } from "@/lib/api";
 
 const headings = {
   books: "Books",
@@ -16,9 +17,10 @@ function generateHeading(mediaType) {
   return headings[mediaType] || mediaType;
 }
 
-export default function MediaTypePage({ episodes }) {
+export default function MediaTypePage() {
   const router = useRouter();
   const { mediaType } = router.query;
+  const { data: episodes, error, loading } = useFetch(fetchEpisodes);
 
   const selectedMedia = [mediaType];
 
@@ -32,51 +34,20 @@ export default function MediaTypePage({ episodes }) {
         </Text>
       </Heading>
 
-      <MediaContainer episodes={episodes} mediaTypes={selectedMedia} />
+      {error ? (
+        <Text color="red.500">Failed to load media: {error}</Text>
+      ) : loading ? (
+        <SkeletonTable />
+      ) : (
+        <MediaContainer episodes={episodes} mediaTypes={selectedMedia} />
+      )}
     </Box>
   );
 }
 
-export async function getStaticProps({ params }) {
-  const { mediaType } = params;
-
-  console.log(`Fetching data for media type: ${mediaType}`);
-  const client = new MongoClient(process.env.MONGODB_URI);
-
-  try {
-    await client.connect();
-    console.log("Connected to MongoDB.");
-
-    const collection = client
-      .db(process.env.MONGODB_DB)
-      .collection("episodesGPT4");
-    console.log("Fetching episodes from MongoDB...");
-
-    let episodes = await collection.find().toArray();
-
-    episodes = JSON.parse(JSON.stringify(episodes));
-
-    console.log(`Fetched ${episodes.length} episodes.`);
-
-    return {
-      props: {
-        episodes,
-      },
-      revalidate: 60 * 60, // Regenerate the page every hour
-    };
-  } catch (error) {
-    console.error("Error fetching data from MongoDB:", error);
-    return {
-      props: {
-        episodes: [],
-        error: "Failed to fetch episodes",
-      },
-    };
-  } finally {
-    console.log("Closing connection to MongoDB...");
-    await client.close();
-    console.log("Closed connection to MongoDB.");
-  }
+// Data is fetched client-side; this exists only so getStaticPaths is honored.
+export async function getStaticProps() {
+  return { props: {} };
 }
 
 export async function getStaticPaths() {

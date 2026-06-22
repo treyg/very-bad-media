@@ -1,66 +1,101 @@
-import { Table, Thead, Tbody, Tr, Th, Td, Text } from "@chakra-ui/react";
-import { fixType } from "../utils/utils";
-const MediaTable = ({
-  data,
-  sortField,
-  setSortField,
-  sortDirection,
-  setSortDirection,
-}) => {
-  const handleSortByDate = () => {
-    const newSortDirection =
-      sortField === "episodeDate" && sortDirection === "asc" ? "desc" : "asc";
-    setSortField("episodeDate");
-    setSortDirection(newSortDirection);
-  };
+import { Table, Text, Link, Badge, Box, Icon } from "@chakra-ui/react";
+import { LuExternalLink, LuHeadphones, LuArrowUp, LuArrowDown } from "react-icons/lu";
+import { fixType, typeColor } from "../utils/utils";
+import { useColorModeValue } from "@/components/ui/color-mode";
+
+const SortHeader = ({ label, field, sortField, sortDirection, onSort, ...rest }) => (
+  <Table.ColumnHeader
+    cursor="pointer"
+    userSelect="none"
+    onClick={() => onSort(field)}
+    {...rest}
+  >
+    <Box as="span" display="inline-flex" alignItems="center" gap={1}>
+      {label}
+      {sortField === field &&
+        (sortDirection === "asc" ? <LuArrowUp /> : <LuArrowDown />)}
+    </Box>
+  </Table.ColumnHeader>
+);
+
+const MediaTable = ({ rows, sortField, sortDirection, onSort }) => {
+  const headerBg = useColorModeValue("#ffffff", "#0f172a");
+  const hoverBg = useColorModeValue("blackAlpha.50", "whiteAlpha.100");
+
+  const headerProps = { sortField, sortDirection, onSort };
 
   return (
-    <Table variant="simple" minWidth="100%">
-      <Thead>
-        <Tr>
-          <Th>Title</Th>
-          <Th>Type</Th>
-          <Th>Author</Th>
-          <Th cursor="pointer" onClick={handleSortByDate}>
-            Date{" "}
-            {sortField === "episodeDate"
-              ? sortDirection === "asc"
-                ? "↑"
-                : "↓"
-              : ""}
-          </Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {data.map((item, index) =>
-          item.media.map((mediaItem, mIndex) => (
-            <Tr key={`${index}-${mIndex}`}>
-              <Td>
+    <Box overflowX="auto">
+      <Table.Root
+        variant="line"
+        size="sm"
+        minWidth="100%"
+        bg="transparent"
+        css={{ "& td, & tr, & tbody, & table": { background: "transparent" } }}
+      >
+        <Table.Header
+          css={{ "& th": { position: "sticky", top: 0, background: headerBg, zIndex: 1 } }}
+        >
+          <Table.Row>
+            <SortHeader label="Title" field="title" {...headerProps} />
+            <SortHeader label="Type" field="type" {...headerProps} />
+            <SortHeader label="Author" field="creator" {...headerProps} />
+            <SortHeader label="Date" field="date" {...headerProps} />
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {rows.map((r, i) => (
+            <Table.Row key={i} _hover={{ bg: hoverBg }}>
+              <Table.Cell>
                 <Text fontSize="md" fontWeight="bold">
-                  <a href={mediaItem.link ? mediaItem.link : "#"}>
-                    {mediaItem.title}
-                  </a>
+                  {r.mediaLink ? (
+                    <Link
+                      href={r.mediaLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      display="inline-flex"
+                      alignItems="center"
+                      gap={1}
+                    >
+                      {r.mediaTitle}
+                      <Icon as={LuExternalLink} boxSize={3} color="gray.500" />
+                    </Link>
+                  ) : (
+                    r.mediaTitle
+                  )}
                 </Text>
-                <Text fontSize="sm" color="gray.500">
-                  <a href={item.episodeLink}>{item.episodeTitle}</a>
+                <Link
+                  href={r.episodeLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  fontSize="sm"
+                  color="gray.500"
+                  display="inline-flex"
+                  alignItems="center"
+                  gap={1}
+                >
+                  <Icon as={LuHeadphones} boxSize={3} />
+                  {r.episodeTitle}
+                </Link>
+              </Table.Cell>
+              <Table.Cell>
+                <Badge colorPalette={typeColor(r.mediaType)}>
+                  {fixType(r.mediaType)}
+                </Badge>
+              </Table.Cell>
+              <Table.Cell>
+                <Text fontSize="sm">{r.mediaCreator}</Text>
+              </Table.Cell>
+              <Table.Cell>
+                <Text fontSize="sm" whiteSpace="nowrap">
+                  {r.dateLabel}
                 </Text>
-              </Td>
-              <Td>
-                <Text fontSize="sm">{fixType(item.mediaType)}</Text>
-              </Td>
-              <Td>
-                <Text fontSize="sm">
-                  {mediaItem.author || mediaItem.director || ""}
-                </Text>
-              </Td>
-              <Td>
-                <Text fontSize="sm">{item.episodeDate}</Text>
-              </Td>
-            </Tr>
-          ))
-        )}
-      </Tbody>
-    </Table>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table.Root>
+    </Box>
   );
 };
 

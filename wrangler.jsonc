@@ -1,0 +1,39 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "very-bad-media-pipeline",
+	"main": "worker/index.js",
+	"compatibility_date": "2026-06-01",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	// Daily build job — mirrors the old Vercel cron (23:30 UTC)
+	"triggers": {
+		"crons": [
+			"30 23 * * *"
+		]
+	},
+	// D1 database (replaces MongoDB).
+	// `remote: true` => local dev connects to the real remote D1 (your choice
+	// during `d1 create`). Flip to false to use a local SQLite copy instead.
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "very-bad-media",
+			"database_id": "834848c9-ab38-477a-83a8-64a89cf88fff",
+			"migrations_dir": "./migrations",
+			"remote": true
+		}
+	],
+	// Non-secret config. RSS feed + OpenRouter model are tweakable here.
+	// Secrets (OPENROUTER_API_KEY, CRON_SECRET) go in `.dev.vars` locally
+	// and `wrangler secret put` in production.
+	"vars": {
+		"RSS_URL": "http://feeds.libsyn.com/474285/rss",
+		"OPENROUTER_MODEL": "google/gemini-2.5-flash",
+		"LOOKBACK_DAYS": "30",
+		"LETTERBOXD_USER": "tamler"
+	},
+	"observability": {
+		"enabled": true
+	}
+}

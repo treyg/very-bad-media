@@ -1,4 +1,5 @@
-import { Box, useColorModeValue } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
+import { useColorModeValue } from '@/components/ui/color-mode'
 
 const BackgroundBlobs = ({ ...props }) => {
   const blob1Color = useColorModeValue('light.primary', 'dark.primary')
@@ -9,7 +10,7 @@ const BackgroundBlobs = ({ ...props }) => {
     <Box
       {...props}
       inset="0"
-      display="grid"
+      display={{ base: 'none', md: 'grid' }}
       placeItems="center"
       opacity="0.2"
       width="max-content"

@@ -23,7 +23,7 @@ const AboutPodcast = () => {
   ]
 
   return (
-    <Container maxW="container.md" py={8}>
+    <Container maxW="3xl" py={8}>
       <Box textAlign="center">
         <Heading as="h1" size="xl" mb={4}>
           About Very Bad Wizards

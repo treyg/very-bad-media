@@ -1,8 +1,9 @@
-import { Box, Heading, Text, Button, useColorModeValue } from '@chakra-ui/react'
+import { Box, Heading, Text, Button } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { useColorModeValue } from "@/components/ui/color-mode";
 
 const NotFoundPage = () => {
-  const buttonColor = useColorModeValue('light.primary', 'dark.primary')
-  const buttonHoverColor = useColorModeValue('green.500', 'green.500')
+  const buttonColor = useColorModeValue("light.primary", "dark.primary");
 
   return (
     <Box textAlign="center" my="60">
@@ -15,20 +16,11 @@ const NotFoundPage = () => {
       <Text fontSize="xl" mb="4">
         The page you were looking for doesn&apos;t exist.
       </Text>
-      <Button
-        as="a"
-        href="/"
-        colorScheme={buttonColor} // Set the button color scheme
-        bg={buttonColor}
-        px={6}
-        _hover={{
-          bg: buttonHoverColor
-        }}
-      >
-        Go Home
+      <Button asChild bg={buttonColor} px={6} _hover={{ bg: "green.500" }}>
+        <NextLink href="/">Go Home</NextLink>
       </Button>
     </Box>
-  )
-}
+  );
+};
 
-export default NotFoundPage
+export default NotFoundPage;
